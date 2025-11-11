@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
     const products = await Product.find({});
     res.json(products);
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: "获取商品列表失败", err });
   }
 });
 
@@ -23,7 +23,7 @@ router.get("/:id", async (req, res, next) => {
     }
     res.json(product);
   } catch (err) {
-    next(err);
+    res.status(500).json({ message: "获取商品详情失败", err });
   }
 });
 

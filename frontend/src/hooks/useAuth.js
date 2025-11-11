@@ -1,17 +1,15 @@
 "use client";
+
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/useUserStore";
+import { useRouter } from "next/navigation";
 
 export const useAuth = () => {
+  const { user, loadUserFromStorage } = useUserStore();
   const router = useRouter();
-  const { user, token } = useUserStore();
 
   useEffect(() => {
-    if (!token) {
-      router.push("/login");
-    }
-  }, [token, router]);
-
-  return { user, token };
+    loadUserFromStorage();
+    if (!user) router.push("/login");
+  }, [user]);
 };

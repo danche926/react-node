@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { connectDB } from "./config/db.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(morgan("dev"));
 
 // 路由
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 // 错误处理
 app.use(errorHandler);

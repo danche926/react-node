@@ -6,6 +6,12 @@ const useUIStore = create((set) => ({
   toast: null,
 
   setLoading: (loading) => set({ loading }),
+  setToast: (toast) => {
+    set({ toast });
+    if (toast) {
+      setTimeout(() => set({ toast: null }), 3000); // 3 秒自动消失
+    }
+  },
   showModal: () => set({ modalVisible: true }),
   hideModal: () => set({ modalVisible: false }),
   showToast: (message) => set({ toast: message }),

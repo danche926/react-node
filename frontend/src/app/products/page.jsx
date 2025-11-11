@@ -49,43 +49,77 @@
 // }
 "use client";
 import { useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { useProductStore, useCartStore, useUIStore } from "@/store";
+import Loading from "@/components/common/LoadingSpinner";
+import Toast from "@/components/common/Toast";
 
 export default function ProductsPage() {
-  const { products, fetchProducts } = useProductStore();
+  const { products, fetchProducts, error } = useProductStore();
   const { addToCart } = useCartStore();
-  const { setLoading } = useUIStore();
+  const { loading, setLoading, toast, setToast } = useUIStore();
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
-      await fetchProducts();
-      setLoading(false);
+      try {
+        setLoading(true);
+        await fetchProducts();
+      } catch (err) {
+        console.error("获取商品失败", err);
+        setToast({ type: "error", message: "商品加载失败" });
+      } finally {
+        setLoading(false);
+      }
     })();
-  }, [fetchProducts, setLoading]);
+  }, [fetchProducts, setLoading, setToast]);
+
+  if (loading) return <Loading />;
+  if (error)
+    return (
+      <p className="text-center text-red-500">加载商品出错，请稍后重试。</p>
+    );
 
   return (
     <div className="p-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {products.map((p) => (
-        <div
-          key={p.id || p._id}
-          className="p-4 bg-white rounded-xl shadow hover:shadow-lg transition"
-        >
-          <img
-            src={p.image || "../image/icon.png"}
-            alt={p.name}
-            className="h-20 object-cover rounded"
-          />
-          <h3 className="mt-2 text-sm font-medium">{p.name}</h3>
-          <p className="text-gray-500 text-sm">￥{p.price}</p>
-          <button
-            onClick={() => addToCart(p)}
-            className="mt-2 w-full bg-blue-500 text-white py-1.5 rounded-lg hover:bg-blue-600"
+      {toast && <Toast {...toast} onClose={() => setToast(null)} />}
+
+      {products.length === 0 ? (
+        <p className="col-span-full text-center text-gray-500">暂无商品</p>
+      ) : (
+        products.map((p) => (
+          <div
+            key={p._id || p.id}
+            className="p-4 bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col justify-between"
           >
-            加入购物车
-          </button>
-        </div>
-      ))}
+            <Link href={`/products/${p._id}`}>
+              <div className="cursor-pointer">
+                <Image
+                  src={p.image || "/image/icon.png"}
+                  alt={p.name}
+                  width={300}
+                  height={200}
+                  className="w-full h-40 object-cover rounded"
+                />
+                <h3 className="mt-2 text-base font-semibold">{p.name}</h3>
+              </div>
+            </Link>
+
+            <div className="mt-2">
+              <p className="text-gray-600 text-sm mb-2">￥{p.price}</p>
+              <button
+                onClick={() => {
+                  addToCart(p);
+                  setToast({ type: "success", message: "已加入购物车" });
+                }}
+                className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+              >
+                加入购物车
+              </button>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 }
