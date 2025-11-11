@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCartStore, useUserStore, useUIStore } from "@/store";
 import { useRouter } from "next/navigation";
+import { removeToken } from "@/utils/storage";
 export default function Navbar() {
   const { user, logout } = useUserStore();
   const { cart } = useCartStore();
@@ -11,7 +12,7 @@ export default function Navbar() {
   const handleLogout = () => {
     logout();
     router.push("/login");
-    localStorage.removeItem("authToken");
+    removeToken()
     setToast({ type: "success", message: "已退出登录" });
   };
 

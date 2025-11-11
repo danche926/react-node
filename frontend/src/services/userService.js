@@ -1,5 +1,6 @@
 // src/services/userService.js
 import api from "./api";
+import { setToken } from '@/utils/storage'
 
 export const registerUser = async (data) => {
   // 返回 { _id, name, email }，不暴露密码
@@ -10,7 +11,7 @@ export const loginUser = async (data) => {
   const user = await api.post("/users/login", data);
   // 登录成功后存 token
   if (user.token) {
-    localStorage.setItem("authToken", user.token);
+    setToken(user.token);
   }
   return user;
 };

@@ -18,7 +18,7 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await register({ name, email, password });
-    router.push("/"); // 注册成功后跳首页
+    router.push("/login"); // 注册成功后跳首页
   };
 
   return (

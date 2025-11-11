@@ -1,11 +1,17 @@
 "use client";
 import { useCartStore } from "@/store";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, getTotalPrice } = useCartStore();
+  const router = useRouter();
 
   if (cart.length === 0)
     return <p className="text-center mt-20 text-gray-500">购物车为空</p>;
+
+  const handleCheckout = () => {
+    router.push("/checkout"); // 跳转到下单确认页
+  };
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
@@ -44,8 +50,17 @@ export default function CartPage() {
           </div>
         </div>
       ))}
-      <div className="mt-4 text-right font-bold">
-        总价：￥{getTotalPrice().toFixed(2)}
+
+      <div className="mt-4 flex justify-between items-center">
+        <div className="font-bold text-lg">
+          总价：￥{getTotalPrice().toFixed(2)}
+        </div>
+        <button
+          onClick={handleCheckout}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          去下单
+        </button>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { connectDB } from "./config/db.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ app.use(morgan("dev"));
 // 路由
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
-
+app.use("/api/orders", orderRoutes);
 // 错误处理
 app.use(errorHandler);
 
