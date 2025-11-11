@@ -50,7 +50,7 @@ export default function ProductDetailPage() {
             alt={product.name}
             width={400}
             height={400}
-            className="rounded-lg shadow-md object-cover"
+            className="rounded-lg shadow-md object-contain"
           />
         </div>
 

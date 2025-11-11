@@ -7,8 +7,8 @@ dotenv.config();
 connectDB();
 
 const products = [
-  { id: '1', name: "示例商品 A", price: 99, description: "测试商品 A", countInStock: 10 },
-  { id: '2', name: "示例商品 B", price: 199, description: "测试商品 B", countInStock: 5 },
+  { id: '1', name: "示例商品 A", price: 99, description: "测试商品 A", countInStock: 10,image: 'https://fastly.picsum.photos/id/263/200/300.jpg?hmac=_3gUXUjqs7PiEu_rAuPqS0Oa4X18Og5yS-C1HQ3KvtE' },
+  { id: '2', name: "示例商品 B", price: 199, description: "测试商品 B", countInStock: 5, image: 'https://fastly.picsum.photos/id/338/200/200.jpg?hmac=5S5SeR5xW8mbN3Ml7wTTJPePX392JafhcFMGm7IFNy0' },
 ];
 
 const importData = async () => {

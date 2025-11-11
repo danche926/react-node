@@ -32,7 +32,7 @@ const orderSchema = new mongoose.Schema(
 
     paymentMethod: { type: String, required: true },
     totalPrice: { type: Number, required: true },
-    status: { type: String, default: "pending" },
+    status: { type: String, default: "去支付" },
   },
   { timestamps: true } // ✅ 自动加 createdAt 和 updatedAt
 );
