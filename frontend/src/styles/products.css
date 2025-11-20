@@ -1,0 +1,61 @@
+/* 商品卡片外层布局增强 */
+.products-grid {
+  animation: fadeIn 0.5s ease;
+}
+
+/* 商品卡片 hover 动画（轻缩放） */
+.product-card {
+  transform: translateY(0);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* 商品图片增强（放大略微跟随） */
+.product-image {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.06);
+}
+
+/* 商品标题样式 */
+.product-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #222;
+  margin-top: 8px;
+}
+
+/* SEO - 聚焦态 Outline（键盘用户） */
+.product-card:focus-within {
+  outline: 3px solid #3b82f6; /* Tailwind 蓝色 */
+  border-radius: 12px;
+}
+
+/* 商品价格突出 */
+.product-price {
+  color: #e60023;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* 「加入购物车」按钮交互增强 */
+.add-btn {
+  transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.add-btn:hover {
+  transform: scale(1.03);
+}
+
+/* SEO 动画渐显 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
